@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : 本机(127.0.0.1)
@@ -32,3 +32,6 @@ CREATE TABLE `t_student` (
 INSERT INTO `t_student` VALUES ('1', '张三', '10');
 INSERT INTO `t_student` VALUES ('2', '李四', '20');
 INSERT INTO `t_student` VALUES ('3', '王五', '30');
+
+
+
