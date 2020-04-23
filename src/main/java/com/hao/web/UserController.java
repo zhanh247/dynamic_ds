@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.hao.bean.User;
 import com.hao.service.UserService;
 
@@ -30,7 +32,9 @@ public class UserController {
 
     @GetMapping("getList")
     private List<User> get() {
+        Page<?> page =PageHelper.startPage(1,2); 
         List<User> list = userService.getList();
+        System.out.println("总共有:"+page.getTotal()+"条数据,实际返回:"+list.size()+"两条数据!");
         return list;
     }
 

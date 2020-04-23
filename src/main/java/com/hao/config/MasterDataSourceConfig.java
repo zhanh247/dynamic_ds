@@ -1,9 +1,11 @@
 package com.hao.config;
 
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -16,6 +18,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.github.pagehelper.PageInterceptor;
 
 @Configuration
 @MapperScan(basePackages = MasterDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "masterSqlSessionFactory")
@@ -124,6 +127,23 @@ public class MasterDataSourceConfig {
         sessionFactory.setDataSource(masterDataSource);
         sessionFactory.setMapperLocations(
             new PathMatchingResourcePatternResolver().getResources(MasterDataSourceConfig.MAPPER_LOCATION));
+        
+       //TODO 有些博客说需要加以下东西，其实不用，多数据源下加了反而报错，加了不如不加，然而目前我还没发现下面这东西有啥好处
+        /* 
+        // 分页插件
+        Interceptor interceptor = new PageInterceptor();
+        Properties properties = new Properties();
+        // 数据库
+        properties.setProperty("helperDialect", "mysql");
+        // 是否将参数offset作为PageNum使用
+        properties.setProperty("offsetAsPageNum", "true");
+        // 是否进行count查询
+        properties.setProperty("rowBoundsWithCount", "true");
+        // 是否分页合理化
+        properties.setProperty("reasonable", "false");
+        interceptor.setProperties(properties);
+        sessionFactory.setPlugins(new Interceptor[] {interceptor});*/
+
         return sessionFactory.getObject();
     }
 }

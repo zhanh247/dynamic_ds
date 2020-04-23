@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.hao.bean.Student;
 import com.hao.service.StudentService;
 
@@ -29,7 +32,9 @@ public class StudentController {
 
     @GetMapping("getList")
     private List<Student> get() {
+        Page<?> page =PageHelper.startPage(1,2); 
         List<Student> list = studentService.getList();
+        System.out.println("总共有:"+page.getTotal()+"条数据,实际返回:"+list.size()+"两条数据!");
         return list;
     }
 
